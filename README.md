@@ -64,6 +64,17 @@ IMPORTANT: Be sure to enable authentication (eg. HTTP Basic auth) and TLS certif
 
 ### Via Docker image
 
+New Environment
+
+```
+TELEGRAM_BOT_TOKEN
+TELEGRAM_BOT_USERNAME
+
+TELEGRAM=true
+TELEGRAM_CHANNEL_ID
+CHECK_PROXY
+```
+
 ````
 docker run \
   --name ciao \

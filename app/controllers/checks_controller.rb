@@ -124,6 +124,6 @@ class ChecksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def check_params
-    params.require(:check).permit(:name, :cron, :url, :active)
+    params.require(:check).permit(:name, :cron, :url, :active, :proxy)
   end
 end

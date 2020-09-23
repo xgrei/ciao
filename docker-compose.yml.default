@@ -1,0 +1,51 @@
+version: "3"
+services:
+  ciao:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: jdb/ciao
+    container_name: ciao
+    ports:
+      - '8090:3000'
+    networks:
+      - jdb_ciao
+    environment:
+      - SECRET_KEY_BASE="feedme"
+      - TELEGRAM="true"
+      - TELEGRAM_CHANNEL_ID="feedme"
+      - CHECK_PROXY="proxy:8081"
+      # - SMTP_ADDRESS=smtp.yourhost.com
+      # - SMTP_EMAIL_FROM=ciao@yourhost.com
+      # - SMTP_EMAIL_TO=you@yourhost.com
+      # - SMTP_PORT=587
+      # - SMTP_AUTHENTICATION=plain
+      # - SMTP_DOMAIN=smtp.yourhost.com
+      # - SMTP_ENABLE_STARTTLS_AUTO=true
+      # - SMTP_USERNAME=ciao
+      # - SMTP_PASSWORD=sensitive_password
+    volumes:
+      - db:/app/db/sqlite/
+  proxy:
+    build:
+      context: ./
+      dockerfile: Dockerfile_proxy
+    image: jdb/ciao_proxy
+    container_name: ciao_proxy
+    # ports:
+    #   - '8081:8080'
+    #   - '1081:1080'
+    networks:
+      - jdb_ciao
+    environment:
+      # brook server connection info
+      - PROXY_SERVER="8.8.8.8:1111"
+      - PROXY_SERVER_PWD="feedme"
+      - PROXY_SOCKS5="0.0.0.0:1080"
+      - PROXY_HTTP="0.0.0.0:8080"
+
+volumes:
+  db:
+
+networks:
+  jdb_ciao:

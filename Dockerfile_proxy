@@ -1,0 +1,9 @@
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY ./bin/brook ./
+
+EXPOSE 8080
+
+CMD ["./start_proxy.sh"]

@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.5'
+ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '6.0.3.3'
@@ -71,5 +71,6 @@ gem 'rufus-scheduler'
 gem 'sassc', '~> 2.0.1'
 gem 'simple_form'
 gem 'tabler-rubygem'
+gem 'telegram-bot'
 gem 'yabeda-prometheus'
 gem 'yabeda-rails'

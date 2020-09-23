@@ -51,10 +51,21 @@ class Check < ApplicationRecord
   def create_job
     job =
       Rufus::Scheduler.singleton.cron cron, job: true do
-        url = URI.parse(self.url)
+        uri = URI.parse(url)
         begin
-          response = Net::HTTP.get_response(url)
-          http_code = response.code
+          http_code = if proxy
+                        if ENV['CHECK_PROXY'].present?
+                          proxy_addr, proxy_port = ENV['CHECK_PROXY'].split(':')
+                          response = Net::HTTP.new(uri.host, uri.port, proxy_addr, proxy_port).start do |http|
+                            http.get(uri)
+                          end
+                          response.code
+                        else
+                          444
+                        end
+                      else
+                        Net::HTTP.get_response(uri).code
+                      end
         rescue *NET_HTTP_ERRORS => e
           status = e.to_s
         end
